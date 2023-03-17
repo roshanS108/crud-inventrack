@@ -3,12 +3,24 @@ import com.example.crudinventrack.inventorymanagement.util.InventoryItem;
 import com.example.crudinventrack.inventorymanagement.util.InventoryWareHouse;
 import com.example.crudinventrack.inventorymanagement.util.Product;
 import com.example.crudinventrack.inventorymanagement.util.ServiceInventory;
-
+import jakarta.persistence.*;
 import java.security.SecureRandom;
 import java.util.*;
+@Entity
+@Table(name = "Book")
 public class Book extends InventoryItem<Book> implements Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "publisher")
     private String publisher;
+
+    @Column(name = "isbn")
     private int isbn;
     private InventoryWareHouse inventoryWareHouse;
     private ServiceInventory inventoryService;
