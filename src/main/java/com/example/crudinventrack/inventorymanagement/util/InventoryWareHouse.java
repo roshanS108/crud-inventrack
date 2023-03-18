@@ -1,5 +1,6 @@
 package com.example.crudinventrack.inventorymanagement.util;
 import com.example.crudinventrack.entity.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ public class InventoryWareHouse implements ServiceInventory{
     private static List<InventoryItem> bookList = new ArrayList<>();
     private static List<InventoryItem> clothesList = new ArrayList<>();
     private ServiceInventory inventoryService;
-
     public void addProductsToWareHouse(InventoryItem product) {
         this.inventoryItemList.add(product);
         numberOfProduct++;

@@ -15,10 +15,10 @@ public class Store{
         //it will have different copy
         ServiceInventory warehouse = new InventoryWareHouse();
 
-        Book book1 = new Book("Book 122", 10.99, 5, 121223,
+        Book book1 = new Book("Book 122", 10.99, 5, 1234,
                 "author1", "Publisher 1", 1234, warehouse);
-        Book book2 = new Book("Java-Book232", 10.99, 1, 12233,
-                "james gosling" ,"Roshan Shoti", 111, warehouse);
+        Book book2 = new Book("Java-Book232", 10.99, 1, 2323,
+                "james gosling" ,"Roshan Shoti", 1121, warehouse);
         book1.addProduct(book1);
 
         System.out.println(inventoryWareHouse.calculateTotalNumberOfProduct());

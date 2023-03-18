@@ -11,17 +11,18 @@ import java.util.*;
 public class Book extends InventoryItem<Book> implements Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "idBook")
     private int id;
 
-    @Column(name = "author")
+    @Column(name = "author_name")
     private String author;
 
     @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "isbn")
+    @Column(name = "book_isbn")
     private int isbn;
+
     private InventoryWareHouse inventoryWareHouse;
     private ServiceInventory inventoryService;
     //injecting the dependencies
