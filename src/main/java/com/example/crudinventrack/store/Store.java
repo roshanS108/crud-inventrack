@@ -1,10 +1,9 @@
 package com.example.crudinventrack.store;
-
 import com.example.crudinventrack.entity.Book;
 import com.example.crudinventrack.inventorymanagement.util.InventoryItem;
 import com.example.crudinventrack.inventorymanagement.util.InventoryWareHouse;
-import com.example.crudinventrack.inventorymanagement.util.ServiceInventory;
-import com.sun.security.jgss.GSSUtil;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.util.Scanner;
 
 public class Store{
@@ -13,16 +12,16 @@ public class Store{
     public static void main(String[] args) {
 
         //it will have different copy
-        ServiceInventory warehouse = new InventoryWareHouse();
 
-        Book book1 = new Book("Book 122", 10.99, 5, 1234,
-                "author1", "Publisher 1", 1234, warehouse);
-        Book book2 = new Book("Java-Book232", 10.99, 1, 2323,
-                "james gosling" ,"Roshan Shoti", 1121, warehouse);
-        book1.addProduct(book1);
-
+//        ServiceInventory serviceInventory = new InventoryWareHouse();
+        /*book1.addProduct(book1);
+        book1.getBookDetails(book1.getAuthor(), book1.getName());
         System.out.println(inventoryWareHouse.calculateTotalNumberOfProduct());
         printMenu(book1);
+*/
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        Book book1 = context.getBean("book", Book.class);
+        book1.testing();
 
 
     }
@@ -45,7 +44,6 @@ public class Store{
             case 1:
                 inventoryWareHouse.purchaseTheProduct(inventoryItem);
                 break;
-
             case 2:
                 inventoryWareHouse.getSpecificProductDetails2(inventoryItem);
             case 3:

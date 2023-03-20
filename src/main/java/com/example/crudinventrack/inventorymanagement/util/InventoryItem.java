@@ -14,6 +14,11 @@ public abstract class InventoryItem<T>{
     public InventoryItem(){
 
     }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public int getQuantity() {
         return quantity;
     }

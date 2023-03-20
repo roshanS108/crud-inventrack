@@ -4,10 +4,15 @@ import com.example.crudinventrack.inventorymanagement.util.InventoryWareHouse;
 import com.example.crudinventrack.inventorymanagement.util.Product;
 import com.example.crudinventrack.inventorymanagement.util.ServiceInventory;
 import jakarta.persistence.*;
-import java.security.SecureRandom;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 @Entity
 @Table(name = "Book")
+@Component("book")
 public class Book extends InventoryItem<Book> implements Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,18 +27,49 @@ public class Book extends InventoryItem<Book> implements Product {
 
     @Column(name = "book_isbn")
     private int isbn;
-
     private InventoryWareHouse inventoryWareHouse;
     private ServiceInventory inventoryService;
+    public Book(){
+
+    }
     //injecting the dependencies
-    public Book(String name, double price, int quantity,int specId, String author, String publisher
-            ,int isbn, ServiceInventory inventoryService){
-        super(name,price,quantity, specId);
+//    @Autowired
+    public Book(String name, double price, int quantity, int specId, String author,
+                String publisher, int isbn, ServiceInventory inventoryService) {
+        super(name, price, quantity, specId);
         this.author = author;
         this.publisher = publisher;
         this.isbn = isbn;
         this.inventoryService = inventoryService;
     }
+
+    @Autowired
+    public Book(
+            int id, ServiceInventory serviceInventory){
+        System.out.println("constructor with one argument");
+        this.id = id;
+        this.inventoryService = serviceInventory;
+    }
+
+    public void setBook(ServiceInventory serviceInventory){
+        this.inventoryService = serviceInventory;
+        System.out.println("Setter method is being called");
+    }
+    public void testing(){
+        if(inventoryService == null){
+            System.out.println("yes it is null");
+        }else{
+            System.out.println("Not it's not null");
+            System.out.println("The isbn is: " + this.isbn);
+            System.out.println("The author is: " + this.author);
+        }
+    }
+    public void setIsbn(int isbn) {
+        this.isbn = isbn;
+        System.out.println("The isbn is: " + this.isbn);
+    }
+
+
     public String getAuthor(){
         return this.author;
     }

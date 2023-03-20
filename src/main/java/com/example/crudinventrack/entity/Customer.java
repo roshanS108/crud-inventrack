@@ -3,7 +3,7 @@ package com.example.crudinventrack.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "Customer")
 public class Customer {
 
     @Id
