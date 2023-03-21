@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 @Entity
 @Table(name = "Book")
-@Component("book")
 public class Book extends InventoryItem<Book> implements Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,41 +26,60 @@ public class Book extends InventoryItem<Book> implements Product {
 
     @Column(name = "book_isbn")
     private int isbn;
-    private InventoryWareHouse inventoryWareHouse;
+    //injecting the dependencies
+
+    private InventoryWareHouse inventoryWareHouse = new InventoryWareHouse();
+
     private ServiceInventory inventoryService;
     public Book(){
 
     }
-    //injecting the dependencies
-//    @Autowired
     public Book(String name, double price, int quantity, int specId, String author,
-                String publisher, int isbn, ServiceInventory inventoryService) {
+                String publisher, int isbn) {
         super(name, price, quantity, specId);
         this.author = author;
         this.publisher = publisher;
         this.isbn = isbn;
-        this.inventoryService = inventoryService;
+
     }
 
     @Autowired
+    public void setBook(ServiceInventory inventoryService){
+        this.inventoryService = inventoryService;
+    }
+
     public Book(
-            int id, ServiceInventory serviceInventory){
-        System.out.println("constructor with one argument");
+          int id, ServiceInventory serviceInventory){
+        System.out.println("constructor with two argument with id");
         this.id = id;
         this.inventoryService = serviceInventory;
     }
+    public Book( String authorName,
+                ServiceInventory inventoryService){
+        System.out.println("constructor with two argument with author name");
+        this.author = authorName;
+        this.inventoryService = inventoryService;
+    }
 
-    public void setBook(ServiceInventory serviceInventory){
+   /* @Autowired
+    public void setBook(
+            @Qualifier("inventoryWareHouse") ServiceInventory serviceInventory){
         this.inventoryService = serviceInventory;
         System.out.println("Setter method is being called");
     }
+    @Autowired
+    public void setBook2(String author, @Qualifier("inventoryWareHouse2") ServiceInventory serviceInventory){
+        this.author = author;
+        this.inventoryService = serviceInventory;
+        System.out.println("Setter method is being called from setbook2");
+    }*/
     public void testing(){
         if(inventoryService == null){
             System.out.println("yes it is null");
         }else{
             System.out.println("Not it's not null");
-            System.out.println("The isbn is: " + this.isbn);
-            System.out.println("The author is: " + this.author);
+            System.out.println("The id is: " + this.id);
+            System.out.println("The author is: " + this.getName());
         }
     }
     public void setIsbn(int isbn) {
@@ -72,6 +90,11 @@ public class Book extends InventoryItem<Book> implements Product {
 
     public String getAuthor(){
         return this.author;
+    }
+    //make this loose-coupling
+    public void getBookCollection(){
+        System.out.println( inventoryWareHouse.getBookCollection());
+
     }
     public String getPublisher(){
         return publisher;
