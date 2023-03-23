@@ -12,23 +12,27 @@ public class CrudinventrackApplication {
 	}
 
 	@Bean
-	public CommandLineRunner applicationStartupRunner() {
+	public CommandLineRunner applicationStartupRunner(BookDAO bookDAO) {
 
-		return null;
+		return runner ->{
+			createBookObject(bookDAO);
+		};
 	}
 
 	public void createBookObject(BookDAO bookDAO){
 		//creating the book object
 		System.out.println("Creating the book object...");
-		Book book = new Book("Java 122", 23.00, 5, 123, "James Gosling",
+		Book book = new Book("Java 122", 23.00, 5, "James Gosling",
 				"Michael jackson", 23283923);
+		Book book2 = new Book("WARA 122", 223.23, 56, "Gosling",
+				"jackson", 2328393);
 
 		//save the book object to the database
 		System.out.println("Saving the book to the database...");
-		bookDAO.saveBook(book);
+		bookDAO.saveBook(book2);
 
 		//display the id of the saved student
-		System.out.println("Saved Book. specId: " + book.getSpecId());
+		System.out.println("Saved Book. book ISBN: " + book2.getIsbn());
 
 	}
 
