@@ -13,12 +13,10 @@ public class CrudinventrackApplication {
 
 	@Bean
 	public CommandLineRunner applicationStartupRunner(BookDAO bookDAO) {
-
 		return runner ->{
-			createBookObject(bookDAO);
+			readBookDAta(bookDAO);
 		};
 	}
-
 	public void createBookObject(BookDAO bookDAO){
 		//creating the book object
 		System.out.println("Creating the book object...");
@@ -26,13 +24,31 @@ public class CrudinventrackApplication {
 				"Michael jackson", 23283923);
 		Book book2 = new Book("WARA 122", 223.23, 56, "Gosling",
 				"jackson", 2328393);
-
-		//save the book object to the database
 		System.out.println("Saving the book to the database...");
 		bookDAO.saveBook(book2);
 
-		//display the id of the saved student
+		//display the id of the saved book
 		System.out.println("Saved Book. book ISBN: " + book2.getIsbn());
+
+	}
+	private void readBookDAta(BookDAO bookDAO){
+		//create book object
+		System.out.println("Creating new bok object");
+		Book book2 = new Book("asdf 122", 223.23, 56, "asdf2323a",
+				"jackson", 233);
+		//save the book
+		 bookDAO.saveBook(book2);
+
+		 //display the id of the saved book
+		int theId = book2.getIsbn();
+		System.out.println("Saved book isbn. Generated isbn: " + theId);
+
+		//retrieving student based on the id: primary key
+		Book theBook = bookDAO.readBookData(theId);
+
+
+		//display the book
+		System.out.println("Found the book with the isbn: " + theBook);
 
 	}
 
