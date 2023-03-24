@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BookService {
 
-    List<Book> getCustomer();
+    List<Book> getBooks();
 }
