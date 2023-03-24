@@ -13,7 +13,6 @@ public class CrudinventrackApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CrudinventrackApplication.class, args);
 	}
-
 	@Bean
 	public CommandLineRunner applicationStartupRunner(BookDAO bookDAO) {
 		return runner ->{
@@ -32,7 +31,6 @@ public class CrudinventrackApplication {
 
 		//display the id of the saved book
 		System.out.println("Saved Book. book ISBN: " + book2.getIsbn());
-
 	}
 	private void readBookDAta(BookDAO bookDAO){
 		//create book object
