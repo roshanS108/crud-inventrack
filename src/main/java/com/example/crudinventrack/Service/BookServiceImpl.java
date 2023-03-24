@@ -4,9 +4,7 @@ import com.example.crudinventrack.dao.BookDAO;
 import com.example.crudinventrack.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 @Service
 public class BookServiceImpl implements BookService{
 

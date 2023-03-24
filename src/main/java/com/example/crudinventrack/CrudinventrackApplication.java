@@ -1,4 +1,5 @@
 package com.example.crudinventrack;
+import com.example.crudinventrack.Service.BookService;
 import com.example.crudinventrack.dao.BookDAO;
 import com.example.crudinventrack.entity.Book;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +15,14 @@ public class CrudinventrackApplication {
 		SpringApplication.run(CrudinventrackApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner applicationStartupRunner(BookDAO bookDAO) {
+	public CommandLineRunner applicationStartupRunner(BookService bookDAO) {
 		return runner ->{
-			getAllTheBooks(bookDAO);
+			getBook(bookDAO);
 		};
+	}
+
+	public void getBook(BookService bookService){
+		System.out.println(bookService.getBooks());
 	}
 	public void createBookObject(BookDAO bookDAO){
 		//creating the book object
