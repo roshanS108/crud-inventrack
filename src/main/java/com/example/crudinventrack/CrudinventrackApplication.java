@@ -5,6 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
+
 @SpringBootApplication
 public class CrudinventrackApplication {
 	public static void main(String[] args) {
@@ -14,7 +17,7 @@ public class CrudinventrackApplication {
 	@Bean
 	public CommandLineRunner applicationStartupRunner(BookDAO bookDAO) {
 		return runner ->{
-			readBookDAta(bookDAO);
+			getAllTheBooks(bookDAO);
 		};
 	}
 	public void createBookObject(BookDAO bookDAO){
@@ -42,14 +45,23 @@ public class CrudinventrackApplication {
 		 //display the id of the saved book
 		int theId = book2.getIsbn();
 		System.out.println("Saved book isbn. Generated isbn: " + theId);
-
 		//retrieving student based on the id: primary key
 		Book theBook = bookDAO.readBookData(theId);
-
-
 		//display the book
 		System.out.println("Found the book with the isbn: " + theBook);
 
+	}
+
+
+	private void getAllTheBooks(BookDAO bookDAO){
+
+		//get a list of books
+		List<Book> theBooks = bookDAO.getAllBook();
+
+		//display all those books
+		for(Book tempBooks: theBooks){
+			System.out.println("All those books are: " + tempBooks);
+		}
 	}
 
 }
