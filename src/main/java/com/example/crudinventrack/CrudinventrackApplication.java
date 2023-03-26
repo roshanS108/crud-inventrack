@@ -2,6 +2,8 @@ package com.example.crudinventrack;
 import com.example.crudinventrack.Service.BookService;
 import com.example.crudinventrack.dao.BookDAO;
 import com.example.crudinventrack.entity.Book;
+import com.example.crudinventrack.inventorymanagement.util.InventoryWareHouse;
+import com.example.crudinventrack.inventorymanagement.util.ServiceBookInventory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,8 +13,10 @@ import java.util.List;
 
 @SpringBootApplication
 public class CrudinventrackApplication {
+	private static InventoryWareHouse inventoryWareHouse = new InventoryWareHouse();
 	public static void main(String[] args) {
 		SpringApplication.run(CrudinventrackApplication.class, args);
+
 	}
 	@Bean
 	public CommandLineRunner applicationStartupRunner(BookService bookDAO) {
