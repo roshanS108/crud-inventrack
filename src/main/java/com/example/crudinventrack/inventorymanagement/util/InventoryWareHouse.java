@@ -4,13 +4,11 @@ import com.example.crudinventrack.Service.BookServiceImpl;
 import com.example.crudinventrack.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
-
+@Component
 public class InventoryWareHouse implements ServiceBookInventory{
 
     @Autowired
@@ -31,6 +29,7 @@ public class InventoryWareHouse implements ServiceBookInventory{
         }else{
             System.out.println("it is not null bookService");
         }
+        bookService.getBooks();
     }
 
 
