@@ -1,7 +1,7 @@
 package com.example.crudinventrack.inventorymanagement.util;
 import com.example.crudinventrack.Service.BookService;
-import com.example.crudinventrack.Service.BookServiceImpl;
 import com.example.crudinventrack.entity.Book;
+import com.example.exception.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
@@ -13,12 +13,12 @@ public class InventoryWareHouse implements ServiceBookInventory{
 
     @Autowired
     private BookService bookService;
-    private static List<InventoryItem> inventoryItemList = new ArrayList<>();
-    private static List<Book> bookList = new ArrayList<>();
+    private static List<InventoryItem> inventoryItemListFromDataBase = new ArrayList<>();
+    private static List<Book> bookListFromDataBase;
     private static List<InventoryItem> clothesList = new ArrayList<>();
-    public void addBooksToWareHouse(Book product){
-        this.bookList.add(product);
-    }
+    /*public void addBooksToWareHouse(Book product){
+        this.bo.add(product);
+    }*/
     @Override
     public List<Book> getBookCollection(){
         return null;
@@ -31,41 +31,25 @@ public class InventoryWareHouse implements ServiceBookInventory{
         }
         bookService.getBooks();
     }
-
-
-
-    public List<InventoryItem> getInventoryItemList() {
+    /*public List<InventoryItem> getInventoryItemList() {
         return inventoryItemList;
-    }
+    }*/
     public void addClothesToWareHouse(InventoryItem product){
         this.clothesList.add(product);
     }
-
- /*   public void testing(){
-        if(bookService == null){
-            System.out.println("lol");
-        }else{
-            System.out.println("hell nah");
-        }
-
-    }*/
     /**calculate total number of books in the the ware house.
      * return the number of books
      * */
-
-
-    public int calculateTotalNumberOfBooks(){
+  /*  public int calculateTotalNumberOfBooks(){
         int totalNumberOfBooks = 0;
         for(InventoryItem inventoryItem : bookList){
             totalNumberOfBooks++;
         }
         return totalNumberOfBooks;
-    }
-
-
+    }*/
     @Override
     public String getBookDetails(String bookName, String authorName) {
-        List<Book> listOfBooks = bookList;
+        List<Book> listOfBooks = bookListFromDataBase;
         for(InventoryItem theBook: listOfBooks){
             if(theBook instanceof Book){
                 Book theBook2 = (Book) theBook;
@@ -83,8 +67,13 @@ public class InventoryWareHouse implements ServiceBookInventory{
         }
         return "found nothing";
     }
-//    @Override
+
+    @Override
     public void removeBook(int isbn) {
+
+    }
+//    @Override
+  /*  public void removeBook(int isbn) {
         List<Book> listOfBooks = bookList;
         ListIterator<Book> bookIterator = (ListIterator<Book>) listOfBooks.listIterator();
         while(bookIterator.hasNext()){
@@ -103,41 +92,92 @@ public class InventoryWareHouse implements ServiceBookInventory{
         ListIterator<InventoryItem> inventoryIterator = (ListIterator<InventoryItem>) listOfInventoryList.listIterator();
         while(inventoryIterator.hasNext()){
             InventoryItem item = inventoryIterator.next();
-           /* if(item.getSpecId() == isbn){
+           *//* if(item.getSpecId() == isbn){
                 inventoryIterator.remove();
                 break;
             }else{
                 System.out.println("Sorry couldn't find the book isbn number: ");
-            }*/
+            }*//*
         }
         System.out.println("After deleting: " + bookList.toString());
-    }
+    }*/
 
     //testing
     /*public void purchaseTheProduct(InventoryItem item){
         bookDAO.getAllBook();
     }*/
 
-    public void purchaseTheProduct(InventoryItem product){
+    public void purchaseTheProduct() {
+        bookListFromDataBase = bookService.getBooks();
         Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter the book isbn number or enter -1 to quit: ");
+            int bookIsbn = scanner.nextInt();
+            if (bookIsbn == -1) {
+                break;
+            }
+            try {
+                // retrieve the book information based on book isbn
+                Book theBook = bookService.getBooksDataById(bookIsbn);
+                if (theBook != null && theBook.getIsbn() == bookIsbn) {
+                    // display the book information
+                    System.out.println("Book list from database: " + theBook);
+
+                    // only can purchase the product if it is available
+                    if (theBook.getQuantity() > 0) {
+                        // reduce the quantity by 1
+                        theBook.setQuantity(theBook.getQuantity() - 1);
+                        System.out.println("--------------------------------");
+                        System.out.println("You have purchased: " + theBook.getName() + " " +
+                                "the isbn number of the book is: " + theBook.getIsbn());
+                    } else {
+                        System.out.println("Sorry the product is out of stock");
+                    }
+
+                } else {
+                    throw new BookNotFoundException("Couldn't find the book with ISBN: " + bookIsbn);
+                }
+            } catch (BookNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid ISBN number.");
+            }
+        }
+    }
+
+    public void purchaseTheProduct2(){
+       /* Scanner scanner = new Scanner(System.in);
         System.out.println("What product you want to buy?");
         String productName = scanner.nextLine();
-        System.out.println(inventoryItemList.toString());
+
         if(productName.equals("Book")) {
-            for(InventoryItem item : inventoryItemList) {
+            for(InventoryItem item : bookListFromDataBase) {
+
+                System.out.println("Enter the book isbn number: ");
+                int bookIsbn = scanner.nextInt();
+
                 System.out.println("Enter the book name: ");
                 String bookName = scanner.nextLine();
                 System.out.println("Enter the author name: ");
                 String authorName = scanner.nextLine();
                 Book theBook = (Book) item;
+
+                System.out.println("Enter the id you want to get ");
+
+
+                if(theBook.getIsbn() == bookIsbn){
+                    //get the book data from the database.
+
+                }
+
+
                 System.out.println("it reaches the looking for product method in purchaseTheProduct");
                 if (theBook.getName().equals(bookName) && theBook.getAuthor().equals(authorName)){
                     System.out.println("it contains there");
 //                    theBook.getBookDetails(bookName,authorName);
                     System.out.println("the book name is: " + theBook.getName());
-                    if (product.getQuantity() > 0) {
+                   *//* if (product.getQuantity() > 0) {
                         //reduce the quantity by 1
-                        product.setQuantity(product.getQuantity() - 1);
+                        product.setQuantity(product.getQuantity() - 1);*//*
                         //decrease the number of product by 1;
 
                         System.out.println("--------------------------------");
@@ -145,12 +185,12 @@ public class InventoryWareHouse implements ServiceBookInventory{
                         System.out.println("The isbn number of the book: " + theBook.getIsbn());
                     } else {
                         System.out.println("Sorry, this product is out of stock!");
-                    }
+                    }*//*
                 } else {
                     System.out.println("Sorry this product is not available in the inventory");
-                }
-            }
-        }
+                }*//*
+            }*/
+
     }
     //gives the information on the product they choose
     public void getSpecificProductDetails2(InventoryItem inventoryItem) {
@@ -173,7 +213,7 @@ public class InventoryWareHouse implements ServiceBookInventory{
             String brand = scan.next();
         }
     }
-    public void addBookProduct(Book theBook) {
+    /*public void addBookProduct(Book theBook) {
         System.out.println("Adding books to the warehouse");
         //Only add the book to the warehouse if there is not any duplicate spec Id and the ISBN
         //if there is some duplicate specID and isbn immediately return false or print message
@@ -183,13 +223,13 @@ public class InventoryWareHouse implements ServiceBookInventory{
         }else{
             System.out.println("Sorry there is already a duplicate value, your id and isbn should be unique");
         }
-    }
+    }*/
     /**
      * this method checks whether the isbn already exist in the booksItems list
      * @param isbn
      * @return
      */
-    public static boolean checkIfBookISBNExist(int isbn) {
+  /*  public static boolean checkIfBookISBNExist(int isbn) {
         boolean found = true;
         List<Book> listOfBooks = bookList;
         for (InventoryItem theBooks : listOfBooks) {
@@ -216,8 +256,8 @@ public class InventoryWareHouse implements ServiceBookInventory{
             }
         }
         return "Didn't found the author name";
-    }
-    public void makeAnyChangesInWareHouse(InventoryItem inventoryItem){
+    }*/
+   /* public void makeAnyChangesInWareHouse(InventoryItem inventoryItem){
         int choice = 0;
         Scanner sc = new Scanner(System.in);
         do {
@@ -241,9 +281,9 @@ public class InventoryWareHouse implements ServiceBookInventory{
                     break;
             }
         } while (choice != 0);
-    }
+    }*/
     //update the price of the product
-    public static void updatePriceOfTheProduct(InventoryItem inventoryItem) {
+   /* public static void updatePriceOfTheProduct(InventoryItem inventoryItem) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the product name you want to update: ");
         String productName = scanner.nextLine().trim();
@@ -269,15 +309,15 @@ public class InventoryWareHouse implements ServiceBookInventory{
             }
         } else if (productName.equalsIgnoreCase("Clothes")) {
             System.out.println("COMING UP--->HOLD UP");
-        }
+        }*/
     /* if(checkProductType(productName)){
         Book theBook = (Book)inventoryItem;
         if(theBook.getName().equals())
     }*/
-        System.out.println("Yo");
-    }
+    /*    System.out.println("Yo");
+    }*/
     //removes the specific product from the ware-house
-    public static void removeTheSpecificProductFromWareHouse(InventoryItem inventoryItem){
+   /* public static void removeTheSpecificProductFromWareHouse(InventoryItem inventoryItem){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the product name you want to remove: ");
         String productName = scanner.next();
@@ -297,8 +337,7 @@ public class InventoryWareHouse implements ServiceBookInventory{
             }
         }else if(productName.equals("Clothes")){
             System.out.println("FOR CLOTHES COMING UP --->HOLD UP");
-        }
-    }
+        }*/
 
 
 }
