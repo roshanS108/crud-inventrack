@@ -13,7 +13,18 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public List<Book> getBooks() {
-        System.out.println("yes it this method is being called");
+
         return bookDAO.getAllBook();
     }
+
+    @Override
+    public Book getBooksDataById(Integer id) {
+        return bookDAO.findByIsbn(id);
+    }
+
+    @Override
+    public void updateTheQuantity(Book theBook) {
+        bookDAO.update(theBook);
+    }
+
 }

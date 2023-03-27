@@ -122,11 +122,13 @@ public class InventoryWareHouse implements ServiceBookInventory{
                 if (theBook != null && theBook.getIsbn() == bookIsbn) {
                     // display the book information
                     System.out.println("Book list from database: " + theBook);
+                    System.out.println("the quantity: " + theBook.getQuantity());
 
                     // only can purchase the product if it is available
                     if (theBook.getQuantity() > 0) {
-                        // reduce the quantity by 1
-                        theBook.setQuantity(theBook.getQuantity() - 1);
+                        //reduce and update the quantity in the database
+                        theBook.setQuantity(theBook.getQuantity()-1);
+                        bookService.updateTheQuantity(theBook);
                         System.out.println("--------------------------------");
                         System.out.println("You have purchased: " + theBook.getName() + " " +
                                 "the isbn number of the book is: " + theBook.getIsbn());
