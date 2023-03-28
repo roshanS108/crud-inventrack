@@ -2,6 +2,7 @@ package com.example.crudinventrack.Service;
 
 import com.example.crudinventrack.dao.BookDAO;
 import com.example.crudinventrack.entity.Book;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -25,6 +26,11 @@ public class BookServiceImpl implements BookService{
     @Override
     public void updateTheQuantity(Book theBook) {
         bookDAO.update(theBook);
+    }
+
+    @Override
+    public void deleteTheBook(Integer id) {
+        bookDAO.delete(id);
     }
 
 }

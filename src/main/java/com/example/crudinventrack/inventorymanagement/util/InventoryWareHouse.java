@@ -69,43 +69,31 @@ public class InventoryWareHouse implements ServiceBookInventory{
     }
 
     @Override
-    public void removeBook(int isbn) {
-
-    }
-//    @Override
-  /*  public void removeBook(int isbn) {
-        List<Book> listOfBooks = bookList;
-        ListIterator<Book> bookIterator = (ListIterator<Book>) listOfBooks.listIterator();
-        while(bookIterator.hasNext()){
-            InventoryItem book = bookIterator.next();
-            if(book instanceof Book){
-                Book theBook = (Book)book;
-                if(theBook.getIsbn() == isbn){
-                    bookIterator.remove();
-                    break;
-                }else{
-                    System.out.println("Sorry couldn't find the book isbn number: ");
+    public void removeBook() {
+        System.out.println("Welcome to the Roshan store");
+        Scanner scan = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter the book ISBN number or enter -1 to quit: ");
+            int bookIsbn = scan.nextInt();
+            if (bookIsbn == -1) {
+                break;
+            }
+            try {
+                //get the book data based on the isbn
+                Book theBook = bookService.getBooksDataById(bookIsbn);
+                if (theBook != null && theBook.getIsbn() == bookIsbn) {
+                    bookService.deleteTheBook(bookIsbn);
+                    System.out.println("Book removed successfully!");
+                } else {
+                    System.out.println("Couldn't find the book with ISBN: " + bookIsbn);
                 }
+            } catch (BookNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid ISBN number.");
             }
         }
-        List<InventoryItem> listOfInventoryList = inventoryItemList;
-        ListIterator<InventoryItem> inventoryIterator = (ListIterator<InventoryItem>) listOfInventoryList.listIterator();
-        while(inventoryIterator.hasNext()){
-            InventoryItem item = inventoryIterator.next();
-           *//* if(item.getSpecId() == isbn){
-                inventoryIterator.remove();
-                break;
-            }else{
-                System.out.println("Sorry couldn't find the book isbn number: ");
-            }*//*
-        }
-        System.out.println("After deleting: " + bookList.toString());
-    }*/
+    }
 
-    //testing
-    /*public void purchaseTheProduct(InventoryItem item){
-        bookDAO.getAllBook();
-    }*/
 
     public void purchaseTheProduct() {
         bookListFromDataBase = bookService.getBooks();
@@ -135,7 +123,6 @@ public class InventoryWareHouse implements ServiceBookInventory{
                     } else {
                         System.out.println("Sorry the product is out of stock");
                     }
-
                 } else {
                     throw new BookNotFoundException("Couldn't find the book with ISBN: " + bookIsbn);
                 }
@@ -146,54 +133,6 @@ public class InventoryWareHouse implements ServiceBookInventory{
         }
     }
 
-    public void purchaseTheProduct2(){
-       /* Scanner scanner = new Scanner(System.in);
-        System.out.println("What product you want to buy?");
-        String productName = scanner.nextLine();
-
-        if(productName.equals("Book")) {
-            for(InventoryItem item : bookListFromDataBase) {
-
-                System.out.println("Enter the book isbn number: ");
-                int bookIsbn = scanner.nextInt();
-
-                System.out.println("Enter the book name: ");
-                String bookName = scanner.nextLine();
-                System.out.println("Enter the author name: ");
-                String authorName = scanner.nextLine();
-                Book theBook = (Book) item;
-
-                System.out.println("Enter the id you want to get ");
-
-
-                if(theBook.getIsbn() == bookIsbn){
-                    //get the book data from the database.
-
-                }
-
-
-                System.out.println("it reaches the looking for product method in purchaseTheProduct");
-                if (theBook.getName().equals(bookName) && theBook.getAuthor().equals(authorName)){
-                    System.out.println("it contains there");
-//                    theBook.getBookDetails(bookName,authorName);
-                    System.out.println("the book name is: " + theBook.getName());
-                   *//* if (product.getQuantity() > 0) {
-                        //reduce the quantity by 1
-                        product.setQuantity(product.getQuantity() - 1);*//*
-                        //decrease the number of product by 1;
-
-                        System.out.println("--------------------------------");
-                        System.out.println("You have purchased: " + theBook.getName());
-                        System.out.println("The isbn number of the book: " + theBook.getIsbn());
-                    } else {
-                        System.out.println("Sorry, this product is out of stock!");
-                    }*//*
-                } else {
-                    System.out.println("Sorry this product is not available in the inventory");
-                }*//*
-            }*/
-
-    }
     //gives the information on the product they choose
     public void getSpecificProductDetails2(InventoryItem inventoryItem) {
         Scanner scan = new Scanner(System.in);

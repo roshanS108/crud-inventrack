@@ -13,4 +13,6 @@ public interface BookService {
 
     void updateTheQuantity(Book theBook);
 
+    void deleteTheBook(Integer id);
+
 }
