@@ -46,24 +46,6 @@ public class BookDAOImpl implements BookDAO{
         entityManager.remove(theBook);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public Book findByIsbn(Integer id) {
         return entityManager.find(Book.class, id);
@@ -74,8 +56,4 @@ public class BookDAOImpl implements BookDAO{
         entityManager.merge(theBook);
 
     }
-
-
-
-
 }
