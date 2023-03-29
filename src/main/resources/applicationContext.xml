@@ -16,16 +16,18 @@
 
     </bean>
 
-    <bean id = "myInteger" class="java.lang.Integer">
-
-        <constructor-arg value = "123"/>
-
-    </bean>
-    <bean id = "book" class = "com.example.crudinventrack.entity.Book">
-        <constructor-arg ref = "myInteger"/>
+    <bean id="book" class="com.example.crudinventrack.entity.Book">
 
 
     </bean>
+
+
+    <bean id = "store" class = "com.example.crudinventrack.store.Store">
+        <!---Creating Store Object-->
+
+    </bean>
+
+
 
 
 </beans>

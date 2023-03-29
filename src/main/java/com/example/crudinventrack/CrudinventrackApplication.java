@@ -2,7 +2,10 @@ package com.example.crudinventrack;
 import com.example.crudinventrack.Service.BookService;
 import com.example.crudinventrack.dao.BookDAO;
 import com.example.crudinventrack.entity.Book;
+import com.example.crudinventrack.inventorymanagement.util.BookManagement;
+import com.example.crudinventrack.inventorymanagement.util.InventoryItem;
 import com.example.crudinventrack.inventorymanagement.util.InventoryWareHouse;
+import com.example.crudinventrack.store.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import java.util.List;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class CrudinventrackApplication {
@@ -19,7 +23,16 @@ public class CrudinventrackApplication {
 				SpringApplication.run(CrudinventrackApplication.class, args);
 
 		InventoryWareHouse inventoryWareHouse = context.getBean(InventoryWareHouse.class);
-		inventoryWareHouse.testing();
+
+		Store store = context.getBean(Store.class);
+		store.setInventoryWareHouse(inventoryWareHouse);
+
+
+//		inventoryWareHouse.purchaseTheProduct();
+
+		inventoryWareHouse.removeBook();
+
+
 
 
 
@@ -27,7 +40,7 @@ public class CrudinventrackApplication {
 	@Bean
 	public CommandLineRunner applicationStartupRunner(BookService bookDAO) {
 		return runner ->{
-			getBook(bookDAO);
+//			getBook(bookDAO);
 		};
 	}
 
@@ -76,5 +89,17 @@ public class CrudinventrackApplication {
 			System.out.println("All those books are: " + tempBooks);
 		}
 	}
+
+	/*public void purchaseTheProduct(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("What product you want to buy?");
+		String productName = scanner.nextLine();
+
+		if(productName.equals("Book")) {
+			for(InventoryItem item : inventoryItemList) {
+				System.out.println("Enter the isbn number you want to buy: ");
+				int bookIsbnNumber = scanner.nextInt();
+				Book theBook = (Book) item;
+	}*/
 
 }
