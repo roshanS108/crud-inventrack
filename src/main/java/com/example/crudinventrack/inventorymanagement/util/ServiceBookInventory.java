@@ -1,7 +1,16 @@
 package com.example.crudinventrack.inventorymanagement.util;
 
-public interface ServiceBookInventory {
-    public String getBookDetails(String bookName, String authorName);
+import com.example.crudinventrack.entity.Book;
 
-    public void removeBook(int isbn);
+import java.util.List;
+
+public interface ServiceBookInventory {
+    String getBookDetails(String bookName, String authorName);
+
+    void removeBook();
+
+    List<Book> getBookCollection();
+
+//    void testing();
+
 }

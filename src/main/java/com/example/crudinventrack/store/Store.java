@@ -1,31 +1,25 @@
 package com.example.crudinventrack.store;
+import com.example.crudinventrack.dao.BookDAO;
 import com.example.crudinventrack.entity.Book;
 import com.example.crudinventrack.inventorymanagement.util.InventoryItem;
 import com.example.crudinventrack.inventorymanagement.util.InventoryWareHouse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
-
+@Component
 public class Store{
     private static InventoryWareHouse inventoryWareHouse;
-
-    public static void main(String[] args) {
-
-        //it will have different copy
-
-//        ServiceInventory serviceInventory = new InventoryWareHouse();
-        /*book1.addProduct(book1);
-        book1.getBookDetails(book1.getAuthor(), book1.getName());
-        System.out.println(inventoryWareHouse.calculateTotalNumberOfProduct());
-        printMenu(book1);
-*/
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        Book book1 = context.getBean("book", Book.class);
-        book1.testing();
-
-
+    @Autowired
+    public void setInventoryWareHouse(InventoryWareHouse inventoryWareHouse){
+        this.inventoryWareHouse = inventoryWareHouse;
     }
-    public static void printMenu(InventoryItem inventoryItem){
+    public void testing2(){
+        System.out.println("hi from store");
+    }
+    public void printMenu(){
         //init
         int choice;
         //User menu
@@ -42,14 +36,15 @@ public class Store{
         }while(choice<0);
         switch(choice){
             case 1:
-                inventoryWareHouse.purchaseTheProduct(inventoryItem);
+                inventoryWareHouse.purchaseTheProduct();
                 break;
             case 2:
-                inventoryWareHouse.getSpecificProductDetails2(inventoryItem);
+                /*inventoryWareHouse.getSpecificProductDetails2(inventoryItem);
+                break;*/
             case 3:
                 //only for the employees
-                inventoryWareHouse.makeAnyChangesInWareHouse(inventoryItem);
-                break;
+                /*inventoryWareHouse.makeAnyChangesInWareHouse(inventoryItem);
+                break;*/
             case 4:
                 //make changes the product information in ware-house
                 break;
@@ -62,4 +57,24 @@ public class Store{
     public static void checkOut(int productId){
 
     }
+    public static void createBookObject(BookDAO bookDAO){
+        //creating the book object
+        System.out.println("Creating the book object...");
+        Book book = new Book("Java 122", 23.00, 5, "James Gosling",
+                "Michael jackson", 23283923);
+
+        //save the book object to the database
+        System.out.println("Saving the book to the database...");
+        bookDAO.saveBook(book);
+
+        //display the id of the saved student
+        System.out.println("Saved Book. specId: " + book.getIsbn());
+
+    }
+    public static void testing(){
+
+
+    }
+
+
 }

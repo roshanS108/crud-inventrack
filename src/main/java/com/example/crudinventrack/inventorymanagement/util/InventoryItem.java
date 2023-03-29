@@ -1,32 +1,34 @@
 package com.example.crudinventrack.inventorymanagement.util;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+
 import java.util.Random;
-public abstract class InventoryItem<T>{
+
+@MappedSuperclass
+public  class InventoryItem{
+
+    @Column(name = "name_of_Book")
     private String name;
+
+    @Column(name = "price_of_Book")
     private double price;
+
+    @Column(name = "quantity")
     private int quantity;
-    private int specId;
-    public InventoryItem(String name, double price, int quantity, int specId) {
+    public InventoryItem(String name, double price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.specId = specId;
     }
     public InventoryItem(){
 
     }
-
     public void setPrice(double price) {
         this.price = price;
     }
 
     public int getQuantity() {
         return quantity;
-    }
-    public int getSpecId() {
-        return this.specId;
-    }
-    public void setSpecId(int specId) {
-        this.specId = specId;
     }
     public double getPrice() {
         return price;
@@ -43,20 +45,8 @@ public abstract class InventoryItem<T>{
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public void checkNull(){
-    }
-    public abstract void addProduct(T objects);
-    public abstract void removeProduct(int specId);
-    //generate a specific random digits for each Product and clothes;
-    public String generateRandomNumberForProduct(){
-        String uuid = "";
-        Random random = new Random();
-        int length = 5;
-        boolean isUnique;
-        for(int i = 0; i<length; i++){
-            uuid+=((Integer)random.nextInt(length)).toString();
-        }
-        return uuid;
-    }
+
+
+
 
 }
